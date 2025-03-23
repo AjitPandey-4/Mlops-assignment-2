@@ -17,7 +17,7 @@ jobs:
           pip install notebook nbconvert numpy pandas tensorflow scikit-learn matplotlib
       - name: Execute data setup & EDA notebook
         run: |
-          jupyter nbconvert --execute dataSetup&EDA.ipynb --ExecutePreprocessor.timeout=1800 --output executed_dataSetup_and_EDA.ipynb
+          jupyter nbconvert --execute dataSetup-EDA.ipynb --ExecutePreprocessor.timeout=1800 --output executed_dataSetup_and_EDA.ipynb
 
   feature_engineering:
     needs: data_setup_and_eda
