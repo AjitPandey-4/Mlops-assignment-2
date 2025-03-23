@@ -17,7 +17,7 @@ jobs:
           pip install notebook nbconvert numpy pandas tensorflow scikit-learn matplotlib
       - name: Execute data setup & EDA notebook
         run: |
-          jupyter nbconvert --execute dataSetup-EDA.ipynb --ExecutePreprocessor.timeout=1800 --output executed_dataSetup_and_EDA.ipynb
+          jupyter nbconvert --to notebook --execute dataSetup-EDA.ipynb --ExecutePreprocessor.timeout=1800 --output executed_dataSetup_and_EDA.ipynb
 
   feature_engineering:
     needs: data_setup_and_eda
@@ -33,7 +33,7 @@ jobs:
           pip install notebook nbconvert numpy pandas tensorflow scikit-learn shap matplotlib
       - name: Execute Feature Engineering notebook
         run: |
-          jupyter nbconvert --execute feature_engineering.ipynb --ExecutePreprocessor.timeout=1800 --output executed_feature_engineering.ipynb
+          jupyter nbconvert --to notebook --execute feature_engineering.ipynb --ExecutePreprocessor.timeout=1800 --output executed_feature_engineering.ipynb
 
   automl:
     needs: feature_engineering
@@ -49,7 +49,7 @@ jobs:
           pip install notebook nbconvert numpy pandas tensorflow scikit-learn h2o optuna
       - name: Execute AutoML notebook
         run: |
-          jupyter nbconvert --execute automl.ipynb --ExecutePreprocessor.timeout=2400 --output executed_automl.ipynb
+          jupyter nbconvert --to notebook --execute automl.ipynb --ExecutePreprocessor.timeout=2400 --output executed_automl.ipynb
 
   monitoring:
     needs: automl
@@ -65,4 +65,4 @@ jobs:
           pip install notebook nbconvert numpy pandas tensorflow scikit-learn mlflow
       - name: Execute Monitoring notebook
         run: |
-          jupyter nbconvert --execute monitoring.ipynb --ExecutePreprocessor.timeout=1800 --output executed_monitoring.ipynb
+          jupyter nbconvert --to notebook --execute monitoring.ipynb --ExecutePreprocessor.timeout=1800 --output executed_monitoring.ipynb
