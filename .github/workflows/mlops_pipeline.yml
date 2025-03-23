@@ -1,0 +1,48 @@
+name: MLOps Pipeline Automation
+
+on: [push]
+
+jobs:
+
+  setup_data_n_eda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install notebook nbconvert numpy pandas tensorflow sklearn matplotlib
+      - run: jupyter nbconvert --execute dataSetup&EDA.ipynb --output executed_setup_data.ipynb
+
+  feature_engineering:
+    needs: setup_data_n_eda
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install notebook nbconvert numpy pandas sklearn tensorflow shap
+      - run: jupyter nbconvert --execute feature_engineering.ipynb --output executed_feature_engineering.ipynb
+
+  automl:
+    needs: feature_engineering
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install notebook nbconvert numpy pandas tensorflow sklearn h2o optuna
+      - run: jupyter nbconvert --execute automl.ipynb --output executed_automl.ipynb
+
+  monitoring:
+    needs: automl
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install notebook nbconvert numpy pandas sklearn tensorflow mlflow
+      - run: jupyter nbconvert --execute monitoring.ipynb --output executed_monitoring.ipynb
